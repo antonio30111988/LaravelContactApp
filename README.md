@@ -22,8 +22,20 @@ For get the app up and running on their system please do the following in main p
 $ git clone https://github.com/rajikaimal/react-laravel.git
 $ cd laravel-contact-app
 $ npm install
+
+echo "create database awesome_app" | mysql -u root -p
+# type password here
+
+On local environment I'm using root user for mysql but you can change it according to your setup. Fill in .env with your credentials and finally migrate database:
+
 $ php artisan migrate
-$ php -S localhost:3000 -t public
+
+Create the scaffold for login:
+
+$ php artisan make:auth
+
+Start the server with php artisan serve and visit the page http://localhost:8000/.
+
 
 Thanks for your time ;)
 
