@@ -23,7 +23,7 @@ $ git clone https://github.com/rajikaimal/react-laravel.git
 $ cd laravel-contact-app
 $ npm install
 
-echo "create database awesome_app" | mysql -u root -p
+echo "create database lara_contacts" | mysql -u root -p
 # type password here
 
 On local environment I'm using root user for mysql but you can change it according to your setup. Fill in .env with your credentials and finally migrate database:
