@@ -34,7 +34,11 @@ Create the scaffold for login:
 
 $ php artisan make:auth
 
-Start the server with php artisan serve and visit the page http://localhost:8000/.
+Make app listen to 3000 on lovalhost:
+
+$ php -S localhost:3000 -t public
+
+Start the local server (XAMPP, WAMP, LAMP) and visit the page http://localhost:3000/.
 
 
 Thanks for your time ;)
