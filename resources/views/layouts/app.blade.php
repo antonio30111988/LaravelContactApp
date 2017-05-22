@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -29,7 +29,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'Contacts Managment') }}
                     </a>
                 </div>
 
@@ -42,9 +42,15 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                        <?php $class=""; ?>
+						@if (Auth::guest())
+							@if(route('register')==url()->current() || url()->current()==url()->to('/') )
+								<?php $class="register"; ?>
+							@else if(route('login')==url()->current() )
+								<?php $class="login"; ?>
+							@endif
+                            <li><a  href="{{ route('login') }}">Login</a></li>
+                            <li><a class="{{ $class }}" href="{{ route('register') }}">Sign Up</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

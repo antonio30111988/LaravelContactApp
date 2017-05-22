@@ -12,9 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.register');
 });
+//Auth routes for Social Lite Authentication
+Route::get('auth/{provider}', 'Auth\LoginController@redirectionToProvider');
+Route::get('auth/{provider}/callback', 'Auth\LoginController@handlingProviderCallback');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
