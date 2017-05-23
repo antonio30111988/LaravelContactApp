@@ -49,15 +49,9 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        <?php $class=""; ?>
 						@if (Auth::guest())
-							@if(route('register')==url()->current() || url()->current()==url()->to('/') )
-								<?php $class="register"; ?>
-							@else if(route('login')==url()->current() )
-								<?php $class="login"; ?>
-							@endif
-                            <li><a  href="{{ route('login') }}">Login</a></li>
-                            <li><a class="{{ $class }}" href="{{ route('register') }}">Sign Up</a></li>
+                            <li><a  class="{!! route('login')==url()->current() || url()->current()==url()->to('/')  ? 'actual': '' !!}" href="{{ route('login') }}">Login</a></li>
+                            <li><a class="{!! route('register')==url()->current()  ? 'actual': '' !!}" href="{{ route('register') }}">Sign Up</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -86,6 +80,7 @@
 
         @yield('content')
     </div>
+	@if( route('home')==url()->current()  ) 
 	<script type="text/babel">
 		//main app component
 var Contact = React.createClass({
@@ -182,10 +177,10 @@ var ContactDisplay = React.createClass({
 //render app
 ReactDOM.render(
 	<Contact />,
-	document.getElementById('content')
+	document.getElementById('contact-list')
 );
 	</script>
-
+@endif
     <!-- Scripts -->
     <script  src="{{ asset('js/app.js') }}"></script>
 </body>

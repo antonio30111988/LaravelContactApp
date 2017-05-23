@@ -38,25 +38,25 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-	
-	/**
+    
+    /**
      * Redirect the user to the OAuth Provider.
      *
      * @param Provider name
-     * 
+     *
      * @return Response
      */
     public function redirectionToProvider($provider)
     {
-		return Socialite::driver($provider)->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
      * Retrieve user info from provider. Check if user already exists in our
      * database.
      *
-	 * @param Provider name
-     * 
+     * @param Provider name
+     *
      * @return Response
      */
     public function handlingProviderCallback($provider)
@@ -64,16 +64,16 @@ class LoginController extends Controller
         $user = Socialite::driver($provider)->user();
 
         $authUser = $this->findOrCreateUser($user, $provider);
-		
-		//login and redirect to homepage
+        
+        //login and redirect to homepage
         Auth::login($authUser, true);
         return redirect($this->redirectTo);
-    } 
+    }
 
     /**
      * Check if a user has registered.If yes return the user
      * else, create and save new user object.
-     * 
+     *
      * @param  $user Socialite user object
      * @param $provider Auth provider
      * @return  User object

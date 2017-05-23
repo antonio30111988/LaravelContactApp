@@ -13,7 +13,7 @@
 
 
 Route::get('/', function () {
-    return view('auth.register');
+    return view('auth.login');
 });
 
 //Auth routes for Social Lite Authentication

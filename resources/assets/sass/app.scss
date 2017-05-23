@@ -7,3 +7,66 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+body {
+    font-family: Tahoma, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #297ea9;
+    background-color: #ffffff;
+} 
+
+.panel {
+    margin-bottom: 22px;
+    background-color: #f5f8fa;
+    border: 1px solid #9bdbfc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+a.actual
+{
+	color:#2579a9 !important;
+	font-weight:bold !important;
+}
+
+.navbar-default {
+    background-color: #9bdbfc;
+    border-color: #d3e0e9;
+}
+.panel-default > .panel-heading {
+    color: #297ea9;
+    background-color: #9bdbfc;
+    border-color: #d3e0e9;
+}
+.btn-primary {
+    color: #297ea9;
+    background-color: #9bdbfc;
+	border-color: #9bdbfc;
+	-webkit-transition: all .4s ease; 
+    transition: all .4s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2a88bd;
+	border-color: #2a88bd;
+}
+
+.navbar-brand
+{
+	position:relative;
+	color:#2579a9 !important;
+	font-weight:bold !important;
+	-webkit-transition: left .8s ease-in; 
+    transition: left .8s ease;
+	left:0;
+}
+
+.navbar-brand:hover
+{
+	color:#2579a9 !important;
+	font-weight:bold !important;
+	left:50%;
+}
+ 
+ 

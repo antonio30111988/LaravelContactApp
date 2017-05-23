@@ -28,8 +28,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-	
-	/**
+    
+    /**
      * Get the user contacts.
      */
     public function contacts()

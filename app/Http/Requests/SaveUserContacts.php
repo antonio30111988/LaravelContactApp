@@ -25,13 +25,13 @@ class SaveUserContacts extends FormRequest
     {
         return [
             'name' => 'required|string|unique:contacts|max:100',
-			'nick_name' => 'nullable|max:50',
-			'gender' => 'nullable|max:1',
-			'email' => 'required|email|max:1|unique:contacts',
-			'phone' => 'required|integer',
-			'address' => 'required|alpha_num',
-			'company' => 'required',
-			'birth_date' => 'present|date|before_or_equal:today'
+            'nick_name' => 'nullable|max:50',
+            'gender' => 'nullable|max:1',
+            'email' => 'required|email|max:1|unique:contacts',
+            'phone' => 'required|integer',
+            'address' => 'required|alpha_num',
+            'company' => 'required',
+            'birth_date' => 'present|date|before_or_equal:today'
         ];
     }
 }
