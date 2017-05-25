@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddProviderIdNullable extends Migration
+class ChangeBirthDateToDateTypeAgain extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddProviderIdNullable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('provider_id')->nullable()->change();
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->date('birth_date')->change();
         });
     }
 
@@ -25,8 +25,8 @@ class AddProviderIdNullable extends Migration
      */
     public function down()
     {
-         Schema::table('users', function (Blueprint $table) {
-            $table->string('provider_id')->nullable(false)->change();
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->smallInteger('birth_date')->change();
         });
     }
 }

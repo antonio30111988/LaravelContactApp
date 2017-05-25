@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contact;
+use App\Http\Requests\SaveUserContacts;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Validator;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -43,11 +48,16 @@ class HomeController extends Controller
         $address = $request->input('address');
         $company = $request->input('company');
         $birth_date = $request->input('birth_date');
+		
+		if($birth_date=="")
+			$birth_date=Carbon::now();
+		
         $gender = $request->input('gender');
         
         $newContact = new Contact;
         
         $newContact->name = $name;
+        $newContact->user_id = Auth::id();
         $newContact->nick_name = $nick_name;
         $newContact->email = $email;
         $newContact->phone = $phone;
@@ -66,13 +76,20 @@ class HomeController extends Controller
      */
     public function getAll()
     {
-       // $contacts = Cache::remember('contacts', 15, function () {
-        $contact= Contact::all();
-		
-		if($contact){
-		   return Contact::all();
+		$contacts=Contact::all();
+		foreach ($contacts as $contact) {
+			
+			$contact->age=$contact->age();
+			
+			switch($contact->gender)
+			{
+				case "0"; $contact->gender="-";$contact->gender_flag=0;break;
+				case "1"; $contact->gender="Male";$contact->gender_flag=1;break;
+				case "2"; $contact->gender="Female";$contact->gender_flag=2;break;
+			}
 		}
-       // });
+	
+		return $contacts;
     }
     
     /**
@@ -96,21 +113,28 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(SaveUserContacts $request)
+    public function update(Request $request)
     {
-        $id = $request->input('id');
+		$id = $request->input('id');
         $name = $request->input('name');
         $nick_name = $request->input('nick_name');
         $email = $request->input('email');
         $phone = $request->input('phone');
         $address = $request->input('address');
         $company = $request->input('company');
+		
         $birth_date = $request->input('birth_date');
+		if($birth_date=="")
+			$birth_date=Carbon::now();
+		
         $gender = $request->input('gender');
-        
+		
+		$validator = Validator::make($request->all(), Contact::updateRequestRules($id));
+		
         $contact = Contact::find($id);
 
         $contact->name = $name;
+		$contact->user_id = Auth::id();
         $contact->nick_name = $nick_name;
         $contact->email = $email;
         $contact->phone = $phone;
