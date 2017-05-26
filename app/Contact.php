@@ -6,11 +6,29 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+//Model Auditing
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Contact extends Model
+class Contact extends Model implements AuditableContract
 {
     use SoftDeletes; 
+	use Auditable;
     
+	 /**
+     * Should the audit be strict?
+     *
+     * @var bool
+     */
+    protected $auditStrict = true;
+	
+	/**
+     * Should the timestamps be audited?
+     *
+     * @var bool
+     */
+    protected $auditTimestamps = true;
+	
 	/**
     * The attributes that are mass assignable.
     *
@@ -42,7 +60,7 @@ class Contact extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at','birth_date'];
+    protected $dates = ['created_at', 'updated_at','deleted_at','birth_date'];
 	
 	/**
      * Get age from birth_date field
@@ -53,7 +71,7 @@ class Contact extends Model
 	{
 		return $this->birth_date->diffInYears(Carbon::now());
 	}
-
+	
 	/**
      * Update Validation rules
      *
@@ -73,5 +91,6 @@ class Contact extends Model
 				'birth_date' => 'present|date|before_or_equal:today'
 			], 
 			$extend);
-	}	
+	}
+	
 }

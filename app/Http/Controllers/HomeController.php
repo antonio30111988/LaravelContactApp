@@ -50,7 +50,7 @@ class HomeController extends Controller
         $birth_date = $request->input('birth_date');
 		
 		if($birth_date=="")
-			$birth_date=Carbon::now();
+			$birth_date=Carbon::now()->toDateString();
 		
         $gender = $request->input('gender');
         
@@ -74,13 +74,19 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAll()
+    public function getAll(Request $request)
     {
+		if($request->input('query')=='' )
 		$contacts=Contact::all();
+	else
+		$contacts=Contact::where('name','LIKE',$request->input('query')."%")->get(); 
+	
 		foreach ($contacts as $contact) {
 			
 			$contact->age=$contact->age();
 			
+			$contact->birth=$contact->birth_date->toDateString() ;
+					
 			switch($contact->gender)
 			{
 				case "0"; $contact->gender="-";$contact->gender_flag=0;break;
@@ -88,7 +94,7 @@ class HomeController extends Controller
 				case "2"; $contact->gender="Female";$contact->gender_flag=2;break;
 			}
 		}
-	
+	//var_dump($contacts);
 		return $contacts;
     }
     
@@ -125,7 +131,8 @@ class HomeController extends Controller
 		
         $birth_date = $request->input('birth_date');
 		if($birth_date=="")
-			$birth_date=Carbon::now();
+			$birth_date=Carbon::now()->toDateString() ;
+		
 		
         $gender = $request->input('gender');
 		

@@ -6,6 +6,22 @@
  */
 
 require('./bootstrap');
+$(document).ready(function(){
+	
+	$("#modal-save").on('click',function(e){
+		var id=$("#modal-save").attr("data-delete");
+		alert("ID"+id);
+		$.post('/contacts/delete',{ id: id,_token: csrf_token }, function(data) {
+			console.log(data);
+		}).done(function(msg){
+			$("#show-modal").modal('hide');
+		});
+	});	
+});
+
+//import Contact from './react_main'; 
+
+
 //require('./react');
 //window.Vue = require('vue');
 

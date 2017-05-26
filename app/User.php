@@ -7,10 +7,29 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+//Model Auditing
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+
+class User extends Authenticatable implements AuditableContract
 {
     use Notifiable;
+	use Auditable;
 
+	 /**
+     * Should the audit be strict?
+     *
+     * @var bool
+     */
+    protected $auditStrict = true;
+	
+	/**
+     * Should the timestamps be audited?
+     *
+     * @var bool
+     */
+    protected $auditTimestamps = true;
+	
     /**
      * The attributes that are mass assignable.
      *

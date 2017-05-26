@@ -11,11 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 	
 	{{-- React related files --}}
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	{{--<script type="text/babel" src="js/main.js"></script>--}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -80,32 +79,40 @@
 
         @yield('content')
     </div>
-	@if( route('home')==url()->current()  ) 
 	<script type="text/babel">
 		//main app component
 var Contact = React.createClass({
 	getInitialState: function() {
 		return {
 			allContacts: [],
+			query:'',
 		};
 	},
 	componentDidMount: function() {
-		
+		this._getContacts();
 	},
-	_getContacts: function() {
-		$.get('/contacts/list',function(data) {
-			this.setState({ allContacts: data });
+	_getContacts: function(queryText='') {
+		 console.log("query text "+queryText);
+		
+		console.log(this.state.vale);
+		var data="";
+		//var data= search: (this.state.value!=='')?  this.state.value:'';
+		
+		$.get('/contacts/list',{ query: queryText},function(data) {
+			this.setState({  query:queryText,allContacts: data });
 		}.bind(this));
 	},
 	render: function() {
 		var handleContacts = this.state.allContacts.map(function(contact) {
-			return <ContactDisplay key={contact.id} id={contact.id} contact={contact} />
+			return <ContactDisplay key={contact.id} id={contact.id} contact={contact} refreshContacts={this._getContacts} />
 		});
 		return (
 			<div>
+				
 			  <ContactHeader />
-			  <ContactPoster />
-			  {this._getContacts()}
+			  <ContactPoster refreshContacts={this._getContacts} /> 
+			  <ContactSearch query={this.state.query} doSearch={this._getContacts} />
+			 
 			  {handleContacts}
 			</div>
 		);
@@ -121,8 +128,26 @@ var ContactHeader = React.createClass({
 	}
 });
 
+//Contact search component
+var ContactSearch = React.createClass({
+	 doSearch:function(){
+        var query=this.refs.search.getDOMNode().value; 
+        this.props.doSearch(query);
+    },
+	render: function() {
+	  return (
+	  
+		<input className="contact-input" type="text" ref="search" placeholder="Search Contacts" value={this.props.query} onChange={this.doSearch}  />
+
+	  );
+	}
+});
+
 //Contact post component
 var ContactPoster = React.createClass({
+	_refreshContacts:function(){
+        this.props.refreshContacts();
+    },
 	_handleClick: function() {
 		
 		$("#validation_errors").html("");
@@ -147,6 +172,7 @@ var ContactPoster = React.createClass({
 		
 		$.post('/contacts/create', 
 		{ 
+			_token: csrf_token,
 			name: name, 
 			nick_name: nick_name, 
 			company: company, 
@@ -158,7 +184,7 @@ var ContactPoster = React.createClass({
 			
 		}, function(data) {
 			console.log(data);
-			
+			this._refreshContacts();
 		}).fail(function(xhr, status, error) {
        
 			//alert(error);
@@ -211,14 +237,15 @@ var ContactDisplay = React.createClass({
 			editinput: false
 		};
 	},
+	_refreshContacts:function(){
+        this.props.refreshContacts();
+    },
 	_removeItem: function() {
-		alert("ULAT");
-		console.log(this.props.id);
-		$.post('/contacts/delete',{ id: this.props.id }, function(data) {
-			console.log(data);
-		});
+		$("#show-modal").modal();	
+		$("#modal-save").attr('data-delete',this.props.id);	
 	},
 	_editItem: function() {
+		alert("DARTE:"+this.props.contact.birth);
 		this.state.editinput ? this.setState({ editinput: false }) : this.setState({ editinput: true });
 	},
 	_handleSubmit: function() {
@@ -244,9 +271,11 @@ var ContactDisplay = React.createClass({
 		console.log(edited_address);
 		console.log(edited_company);
 		console.log(edited_gender); 
+		//alert("	token"+csrf_token);
 		//return false;
 		
 		$.post('/contacts/update', { 
+			_token: csrf_token,
 			id: this.props.id,
 			name: edited_name, 
 			nick_name: edited_nick_name, 
@@ -258,6 +287,7 @@ var ContactDisplay = React.createClass({
 			birth_date: edited_birth_date, 
 		},function() {
 			this.setState({ editinput: false });
+			this._refreshContacts();
 		}.bind(this)).fail(function(xhr, status, error) {
        
 			//alert(error);
@@ -286,13 +316,12 @@ var ContactDisplay = React.createClass({
 	 },
 	render: function() {
 		return(
-		
 			<div className="contact-item" id={this.props.contact.id}>
 				
 				<span className="do-delete glyphicon glyphicon-remove" onClick={this._removeItem}  ></span>
 			
 				<div className=" contact contact-main">
-					<h3 className=" contact " ><span className="contact-labels glyphicon glyphicon-user"></span>  {!this.state.editinput ? <span className="contact-name">{this.props.contact.name}</span>: <input type="text" id="editName"  ref="edit_name" onChange={this._handleNameChange} defaultValue={this.props.contact.name}  placeholder="Name"   />  }  {!this.state.editinput ? <span className="contact-birth-date">{ (this.props.contact.age>0)? this.props.contact.age+'yrs':''} </span>: <input type="date" id="editBirthDate" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.birth_date}  placeholder="Birth Date" ref="edit_birth_date"  />  }</h3>	
+					<h3 className=" contact " ><span className="contact-labels glyphicon glyphicon-user"></span>  {!this.state.editinput ? <span className="contact-name">{this.props.contact.name}</span>: <input type="text" id="editName"  ref="edit_name" onChange={this._handleNameChange} defaultValue={this.props.contact.name}  placeholder="Name"   />  }  {!this.state.editinput ? <span className="contact-birth-date">{ (this.props.contact.age>0)? this.props.contact.age+'yrs':''} </span>: <input type="date" id="editBirthDate" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.birth}  placeholder="Birth Date" ref="edit_birth_date"  />  }</h3>	
 				</div>
 				<div className=" contact contact-info">
 				<h4 className="contact contact-phone"><span className="contact-labels glyphicon glyphicon-phone-alt"></span> {!this.state.editinput ? <span className="contact-content">{this.props.contact.phone}</span>: <input type="text" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.phone}  placeholder="Name" ref="edit_phone"  />  }</h4> 					
@@ -322,7 +351,10 @@ var ContactDisplay = React.createClass({
 				</button>
 				</div>
 				<ul className="validation_errors" id={"validation_errors"+this.props.id} ref="validation"></ul>
+			
+				
 			</div> 
+			
 		);
 	}
 });
@@ -331,18 +363,30 @@ ReactDOM.render(
 	<Contact />,
 	document.getElementById('contact-list')
 );
-</script>
-	
-@endif
+</script>	
 	<script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-	});
-	
+		var csrf_token = '<?php echo csrf_token(); ?>'; 
     </script>
     <!-- Scripts -->
     <script  src="{{ asset('js/app.js') }}"></script>
+
+	
+	<div class="modal fade" tabindex="-1" role="dialog" id="show-modal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Edit post</h4>
+	      </div>
+	      <div class="modal-body">
+	        Are you sure you want to delete contact?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+	        <button type="button" class="btn btn-primary" data-delete="" id="modal-save">Yes</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </body>
 </html>
