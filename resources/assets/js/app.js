@@ -6,7 +6,8 @@
  */
 
 require('./bootstrap');
-$(document).ready(function(){
+require('./react_main.js');
+/*$(document).ready(function(){
 	
 	$("#modal-save").on('click',function(e){
 		var id=$("#modal-save").attr("data-delete");
@@ -17,12 +18,12 @@ $(document).ready(function(){
 			$("#show-modal").modal('hide');
 		});
 	});	
-});
+});*/
 
 //import Contact from './react_main'; 
 
 
-//require('./react');
+//require('./react_main');
 //window.Vue = require('vue');
 
 /**

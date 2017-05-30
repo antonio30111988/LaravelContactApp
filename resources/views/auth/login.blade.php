@@ -7,6 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
+					
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
@@ -61,10 +62,9 @@
                         </div>
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-								<a href="{{ url('/auth/google') }}" class="btn btn-google"><i class="fa fa-google"></i> Google</a>
-								<a href="{{ url('/auth/github') }}" class="btn btn-github"><i class="fa fa-github"></i> Github</a>
-								<a href="{{ url('/auth/twitter') }}" class="btn btn-twitter"><i class="fa fa-twitter"></i> Twitter</a>
-								<a href="{{ url('/auth/facebook') }}" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
+								<a href="{{ url('/auth/google') }}" class="btn  btn-social btn-google" ><span class="fa fa-google"></button> Google</a>
+								<a href="{{ url('/auth/github') }}" class="btn btn-social btn-github" ><span class="fa fa-github"></span> Github</a>
+								<a href="{{ url('/auth/facebook') }}" class="btn  btn-social btn-facebook" ><span class="fa fa-facebook"></span> Facebook</a>
 							</div>
 						</div>
                     </form>

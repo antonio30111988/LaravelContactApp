@@ -29,7 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+		return view('home');
     }
     
     /**
@@ -41,6 +41,7 @@ class HomeController extends Controller
      */
     public function create(SaveUserContacts $request)
     {
+		
         $name = $request->input('name');
         $nick_name = $request->input('nick_name');
         $email = $request->input('email');
@@ -76,10 +77,13 @@ class HomeController extends Controller
      */
     public function getAll(Request $request)
     {
+				//$contacts=Contact::where('user_id',Auth::id())->get();
+
 		if($request->input('query')=='' )
-		$contacts=Contact::all();
-	else
-		$contacts=Contact::where('name','LIKE',$request->input('query')."%")->get(); 
+		$contacts=User::find(Auth::id())->contacts;
+		else
+		$contacts=User::find(Auth::id())->contacts()->where('name','LIKE',$request->input('query')."%")->get(); 
+		//$contacts=Contact::where('name','LIKE',$request->input('query')."%")->get(); 
 	
 		foreach ($contacts as $contact) {
 			

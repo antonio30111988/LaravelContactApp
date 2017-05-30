@@ -11,7 +11,7 @@ const { mix } = require('laravel-mix');
  |
  */
 if (process.env.NODE_ENV == 'production') {
-    mix.disableNotifications();
+    //mix.disableNotifications();
 }
 
 /*mix.webpackConfig({
@@ -20,6 +20,7 @@ if (process.env.NODE_ENV == 'production') {
 
  
 mix.react('resources/assets/js/app.js', 'public/js')
+//.react('resources/assets/js/react_main.jsx', 'public/js') 
    .sass('resources/assets/sass/app.scss', 'public/css') ;
   // .react('resources/assets/js/react_main.js', 'public/js');
   //.version(['css/app.css', 'js/app.js']);

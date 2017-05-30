@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 //Contact post component
-export default class ContactPoster extends React.Component{
-	_handleClick: function() {
+class ContactPoster extends Component {
+	refreshContacts(){
+        this.props.refreshContacts();
+    }
+	_handleClick() {
 		
 		$("#validation_errors").html("");
 
@@ -39,7 +42,7 @@ export default class ContactPoster extends React.Component{
 			
 		}, function(data) {
 			console.log(data);
-			
+			//this._refreshContacts();
 		}).fail(function(xhr, status, error) {
        
 			//alert(error);
@@ -60,8 +63,9 @@ export default class ContactPoster extends React.Component{
 				});
 			}	
 		});
-	},
-	render: function() {
+		this.refreshContacts();
+	}
+	render() {
 	  return (
 		<div className="create-contact-area">
 			<input className="contact-input" type="text" placeholder="Name" ref="name" required />
@@ -83,4 +87,6 @@ export default class ContactPoster extends React.Component{
 		</div>
 	  );
 	}
-}
+} 
+
+export default ContactPoster;

@@ -1,22 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import ContactDelete from './contact-delete';
+import ContactUpdate from './contact-update';
 //Contact display list component
-export default class ContactDisplay extends React.Component{
-	getInitialState: function() {
+//export default class ContactDisplay extends React.Component{
+class ContactDisplay extends Component {
+	/*getInitialState() {
 		return {
 			editinput: false
 		};
-	},
-	_removeItem: function() {
+	}*/
+	constructor(props) {
+		super(props);
+		this.state = {
+		  contact:''
+		};
+	}
+	componentDidMount() {
+		//alert(this.props.contact)
+		this.setState({
+		  contact: this.props.contact
+		});
+	} 
+	_removeItem() {
 		$("#show-modal").modal();	
-		$("#modal-save").attr('data-delete',this.props.id);	
-	},
-	_editItem: function() {
-		alert("DARTE:"+this.props.contact.birth);
+		//$("#modal-save").attr('data-delete',this.props.id);	
+		console.log("print "+this.props.id);
+		this.handleDeleteRecord(this.props.id);
+	}
+	handleUpdateRecord(contact) { 
+		//alert(this.props.contact);
+		this.props.handleUpdateRecord(contact);
+	}
+	handleDeleteRecord(id) {
+		this.props.handleDeleteRecord(id);
+	}
+	_editItem() {
+		//alert("DARTE:"+this.props.contact.birth);
 		this.state.editinput ? this.setState({ editinput: false }) : this.setState({ editinput: true });
-	},
-	_handleSubmit: function() {
+		$("#show-modal-update").modal();	
+		//$("#modal-save").attr('data-delete',this.props.id);	
+		console.log("print "+this.props.contact);
+		this.handleUpdateRecord(this.props.contact);
+	}
+	_handleSubmit() {
 		$("#validation_errors"+this.props.id).html("");
 
 		var id=this.props.id;
@@ -55,13 +83,14 @@ export default class ContactDisplay extends React.Component{
 			birth_date: edited_birth_date, 
 		},function() {
 			this.setState({ editinput: false });
+			this.handleUpdateRecord();
 		}.bind(this)).fail(function(xhr, status, error) {
        
 			//alert(error);
 			//alert(status);
 			//alert(xhr);
-			alert(xhr.responseText);
-			alert("CODE "+xhr.status);
+			//alert(xhr.responseText);
+			//alert("CODE "+xhr.status);
 			
 			if(xhr.status==422)
 			{
@@ -77,51 +106,52 @@ export default class ContactDisplay extends React.Component{
 			}
 			
 		});
-	},
-	_handleNameChange: function() {
-		this.setState({ [event.target.ref]: event.target.value });
-	 },
-	render: function() {
-		return(
-			<div className="contact-item" id={this.props.contact.id}>
-				
-				<span className="do-delete glyphicon glyphicon-remove" onClick={this._removeItem}  ></span>
-			
-				<div className=" contact contact-main">
-					<h3 className=" contact " ><span className="contact-labels glyphicon glyphicon-user"></span>  {!this.state.editinput ? <span className="contact-name">{this.props.contact.name}</span>: <input type="text" id="editName"  ref="edit_name" onChange={this._handleNameChange} defaultValue={this.props.contact.name}  placeholder="Name"   />  }  {!this.state.editinput ? <span className="contact-birth-date">{ (this.props.contact.age>0)? this.props.contact.age+'yrs':''} </span>: <input type="date" id="editBirthDate" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.birth}  placeholder="Birth Date" ref="edit_birth_date"  />  }</h3>	
-				</div>
-				<div className=" contact contact-info">
-				<h4 className="contact contact-phone"><span className="contact-labels glyphicon glyphicon-phone-alt"></span> {!this.state.editinput ? <span className="contact-content">{this.props.contact.phone}</span>: <input type="text" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.phone}  placeholder="Name" ref="edit_phone"  />  }</h4> 					
-
-				<h4 className=" contact contact-email"><span className="contact-labels glyphicon glyphicon-envelope"></span>  {!this.state.editinput ? <span className="contact-content">{this.props.contact.email}</span>: <input type="email" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.email}  placeholder="Email" ref="edit_email"  />  }</h4>
-				<h4 className=" contact contact-address"><span className="contact-labels glyphicon glyphicon-map-marker"></span>  {!this.state.editinput ? <span className="contact-content">{this.props.contact.address}</span>: <input type="text" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.address}  placeholder="Adress" ref="edit_address"  />  }</h4>
-				<h4 className=" contact contact-company"><span className="contact-labels glyphicon glyphicon-tower"></span>  {!this.state.editinput ? <span className="contact-content">{this.props.contact.company}</span>: <input type="text" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.company}  placeholder="Company" ref="edit_company"  />  }</h4>
-				</div>
-				<div className=" contact contact-additional">
-					<p className=" contact contact-gender"><span className="contact-labels">Sex:</span>  {!this.state.editinput ? <span className="contact-content">{this.props.contact.gender}</span>: 
-					<select defaultValue={this.props.contact.gender_flag}  className="contact-input editInputs select-gender" onChange={this._handleNameChange} ref="edit_gender" >
-				<option  value="0">Choose gender</option>
-				<option  value="1">Male</option>
-				<option   value="2">Female</option>
-			</select>  }</p>
-					<p className=" contact contact-nickname"><span className="contact-labels">Nickname:</span>  {!this.state.editinput ? <span className="contact-content">{this.props.contact.nick_name}</span>: <input type="text" id="nickname_input" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.nick_name}  placeholder="Nickname" ref="edit_nickname"  />  }</p>
-				</div>
-				
-				<div className="do-edit-save">
-				{this.state.editinput ?	
-					<button onClick={this._handleSubmit} className="do-save btn btn-success btn-sm" > Save </button>
-					
-
-				: '' }
-				<button  onClick={this._editItem} className="do-edit btn btn-danger btn-sm">
-					<span className="  glyphicon glyphicon-edit"></span> Edit
-				</button>
-				</div>
-				<ul className="validation_errors" id={"validation_errors"+this.props.id} ref="validation"></ul>
-			
-				
-			</div> 
-			
-		);
 	}
+	_handleNameChange() {
+		this.setState({ [event.target.ref]: event.target.value });
+	 }
+	render() {
+		return(
+			
+				<div className="contact-item" id={this.props.id}>
+					<span className="do-delete glyphicon glyphicon-remove" onClick={this._removeItem.bind(this)}  ></span>
+				
+					<div className=" contact contact-main">
+						<h3 className=" contact " ><span className="contact-labels glyphicon glyphicon-user"></span>  {!this.state.editinput ? <span className="contact-name">{this.props.contact.name}</span>: <input type="text" id="editName"  ref="edit_name" onChange={this._handleNameChange} defaultValue={this.props.contact.name}  placeholder="Name"   />  }  {!this.state.editinput ? <span className="contact-birth-date">{ (this.props.contact.age>0)? this.props.contact.age+'yrs':''} </span>: <input type="date" id="editBirthDate" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.birth}  placeholder="Birth Date" ref="edit_birth_date"  />  }</h3>	
+					</div>
+					<div className=" contact contact-info">
+					<h4 className="contact contact-phone"><span className="contact-labels glyphicon glyphicon-phone-alt"></span> {!this.state.editinput ? <span className="contact-content">{this.props.contact.phone}</span>: <input type="text" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.phone}  placeholder="Name" ref="edit_phone"  />  }</h4> 					
+
+					<h4 className=" contact contact-email"><span className="contact-labels glyphicon glyphicon-envelope"></span>  {!this.state.editinput ? <span className="contact-content">{this.props.contact.email}</span>: <input type="email" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.email}  placeholder="Email" ref="edit_email"  />  }</h4>
+					<h4 className=" contact contact-address"><span className="contact-labels glyphicon glyphicon-map-marker"></span>  {!this.state.editinput ? <span className="contact-content">{this.props.contact.address}</span>: <input type="text" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.address}  placeholder="Adress" ref="edit_address"  />  }</h4>
+					<h4 className=" contact contact-company"><span className="contact-labels glyphicon glyphicon-tower"></span>  {!this.state.editinput ? <span className="contact-content">{this.props.contact.company}</span>: <input type="text" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.company}  placeholder="Company" ref="edit_company"  />  }</h4>
+					</div>
+					<div className=" contact contact-additional">
+						<p className=" contact contact-gender"><span className="contact-labels">Sex:</span>  {!this.state.editinput ? <span className="contact-content">{this.props.contact.gender}</span>: 
+						<select defaultValue={this.props.contact.gender_flag}  className="contact-input editInputs select-gender" onChange={this._handleNameChange} ref="edit_gender" >
+					<option  value="0">Choose gender</option>
+					<option  value="1">Male</option>
+					<option   value="2">Female</option>
+					</select>  }</p>
+						<p className=" contact contact-nickname"><span className="contact-labels">Nickname:</span>  {!this.state.editinput ? <span className="contact-content">{this.props.contact.nick_name}</span>: <input type="text" id="nickname_input" className="editInputs" onChange={this._handleNameChange} defaultValue={this.props.contact.nick_name}  placeholder="Nickname" ref="edit_nickname"  />  }</p>
+					</div>
+					
+					<div className="do-edit-save">
+					{this.state.editinput ?	
+						<button onClick={this._handleSubmit.bind(this)} className="do-save btn btn-success btn-sm" > Save </button>
+						
+
+					: '' }
+					<button  onClick={this._editItem.bind(this)} className="do-edit btn btn-danger btn-sm">
+						<span className="  glyphicon glyphicon-edit"></span> Edit
+					</button>
+					</div>
+					<ul className="validation_errors" id={"validation_errors"+this.props.id} ref="validation"></ul>
+				
+
+				</div> 
+		);
+	} 
 }
+
+export default ContactDisplay;

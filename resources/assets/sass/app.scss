@@ -1,3 +1,6 @@
+$fa-font-path: "../../../node_modules/font-awesome/fonts" !default; 
+
+@import 'node_modules/font-awesome/scss/font-awesome.scss';
 
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
@@ -98,7 +101,6 @@ h2.create-contact{font-size:25px;}
     background-color: #9bdbfc;
 }
 #user-admin{ background-color: #f5f8fa; }
-.user-name{text-transform:uppercase;}
 .navbar-default .navbar-nav > li > a 
 {
     color: #2579a9;

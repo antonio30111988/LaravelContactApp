@@ -18,8 +18,16 @@ Route::group(['middleware' => ['web']], function () {
 	
 	//Homepage - Login
 	Route::get('/', function () {
+		if(\Auth::check())
+			return redirect('home');
+
 		return view('auth.login');
 	});
+	Route::get('/login', function () {
+		if(\Auth::check())
+			return redirect('home');
+		return view('auth.login');
+	})->name('login');
 	
 	//Auth scafollding
 	Auth::routes();

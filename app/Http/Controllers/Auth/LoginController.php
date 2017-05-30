@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Auth;
+use App\User;
 use Socialite;
 
 class LoginController extends Controller
@@ -48,7 +50,10 @@ class LoginController extends Controller
      */
     public function redirectionToProvider($provider)
     {
-        return Socialite::driver($provider)->redirect();
+        if($provider=="google" )
+		return Socialite::driver($provider)->scopes(['profile','email'])->redirect();
+	
+	return Socialite::driver($provider)->redirect(); 
     }
 
     /**
@@ -59,11 +64,20 @@ class LoginController extends Controller
      *
      * @return Response
      */
-    public function handlingProviderCallback($provider)
+    public function handlingProviderCallback(Request $request,$provider)
     {
-        $user = Socialite::driver($provider)->user();
+        if($provider=="facebook" )
+		$user = Socialite::with($provider)->user();
+		else
+		$user = Socialite::driver($provider)->user();
+		
+		//if($user->name==null)
+		//	$user->name="No name";
 
         $authUser = $this->findOrCreateUser($user, $provider);
+		
+		if(!$authUser) 
+			return redirect('/')->withNotification("User with same email adress already exist!");
         
         //login and redirect to homepage
         Auth::login($authUser, true);
@@ -84,6 +98,12 @@ class LoginController extends Controller
         if ($authUser) {
             return $authUser;
         }
+		$emailExists=User::where('email', $user->email)->first();
+		
+		if($emailExists)
+			return false;
+		
+		
         return User::create([
             'name'     => $user->name,
             'email'    => $user->email,

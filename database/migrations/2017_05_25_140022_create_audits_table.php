@@ -33,7 +33,7 @@ class CreateAuditsTable extends Migration
                 $table->morphs('auditable');
                 $table->text('old_values')->nullable();
                 $table->text('new_values')->nullable();
-                $table->string('url')->nullable();
+                $table->string('url',300)->nullable();
                 $table->ipAddress('ip_address')->nullable();
                 $table->string('user_agent')->nullable();
                 $table->timestamp('created_at');
