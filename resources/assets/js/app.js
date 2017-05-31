@@ -7,18 +7,16 @@
 
 require('./bootstrap');
 require('./react_main.js');
-/*$(document).ready(function(){
-	
-	$("#modal-save").on('click',function(e){
-		var id=$("#modal-save").attr("data-delete");
-		alert("ID"+id);
-		$.post('/contacts/delete',{ id: id,_token: csrf_token }, function(data) {
-			console.log(data);
-		}).done(function(msg){
-			$("#show-modal").modal('hide');
-		});
-	});	
-});*/
+
+
+$(document).ready(function(){
+	//alert("dsdsfv");
+	/*$(".select-search-options").select2({
+	  placeholder: "Select search by fields"
+	});*/
+}); 
+
+
 
 //import Contact from './react_main'; 
 

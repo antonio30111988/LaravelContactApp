@@ -5,12 +5,14 @@ $fa-font-path: "../../../node_modules/font-awesome/fonts" !default;
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
+
 // Variables
 @import "variables";
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+/*Header,Body*/
 body 
 {
     font-family: Tahoma, sans-serif;
@@ -90,12 +92,14 @@ h2.create-contact{font-size:25px;}
 	margin: 40px auto;
     width: 100%;
 }
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus 
+{
     background-color: #9bdbfc;
     color: #297ea9;
 	font-weight:bold;
 }
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus 
+{
     text-decoration: none;
     color: #297ea9;
     background-color: #9bdbfc;
@@ -105,6 +109,9 @@ h2.create-contact{font-size:25px;}
 {
     color: #2579a9;
 }
+
+
+/*Contact Manager*/
 .contact-item
 {
 	position:relative;
@@ -146,7 +153,6 @@ h2.create-contact{font-size:25px;}
     border-radius: 0 0 10px 0px;
     padding: 5px;
 	margin-bottom:20px;
-	
 }
 .contact-main h3 
 {
@@ -211,5 +217,23 @@ hr.divide
     height: 2px;
 }
 
- 
+/*Footer*/
+.footer-content
+{
+	text-align: center;
+    background: #9bdbfc;
+    height: 50px;
+}
+.footer-content p
+{
+	line-height: 50px;
+}
+.social-logins{text-align:center;}
+.no-results{text-align:center;}
+html,body{
+    height: 100%;
+}
+
+// Media queries
+@import "media"; 
  

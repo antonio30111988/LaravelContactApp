@@ -61,7 +61,7 @@
                             </div>
                         </div>
 						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
+							<div class="col-md-6 col-md-offset-4 social-logins">
 								<a href="{{ url('/auth/google') }}" class="btn  btn-social btn-google" ><span class="fa fa-google"></button> Google</a>
 								<a href="{{ url('/auth/github') }}" class="btn btn-social btn-github" ><span class="fa fa-github"></span> Github</a>
 								<a href="{{ url('/auth/facebook') }}" class="btn  btn-social btn-facebook" ><span class="fa fa-facebook"></span> Facebook</a>

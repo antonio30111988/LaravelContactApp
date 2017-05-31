@@ -5,16 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
+    {{-- Csrf token --}}
     <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 	
-	{{-- React related files --}}
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-    <!-- Styles -->
+    {{-- Main css file--}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	
+	{{-- jQuery and Select2 3rd party library --}}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script>$(document).ready(function(){
+	//alert("dsdsfv");
+	/*$(".select-search-options").select2({
+	  placeholder: "Select search by fields",
+	});*/
+}); </script>
 </head>
 <body>
     <div id="app">
@@ -87,8 +95,8 @@
 		<footer class="page-footer blue center-on-small-only">
 		 <!--Copyright-->
     <div class="footer-copyright">
-        <div class="container-fluid">
-            © 2015 Copyright: <a href="https://www.MDBootstrap.com"> MDBootstrap.com </a>
+        <div class="footer-content container-fluid">
+           <p> © {{ Carbon\Carbon::now()->year}} Copyright by <a target="_blank" href="https://github.com/antonio30111988/LaravelContactApp/blob/master/README.md"> Antonio Lolić </a></p>
 
         </div>
     </div>
@@ -97,8 +105,22 @@
     </div>
 	<script type="text/javascript">
 		var csrf_token = '<?php echo csrf_token(); ?>'; 
+		
+		function debounce(fn, delay) {
+  var timer = null;
+  return function () {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
+  };
+}
     </script> 
     <!-- Scripts -->
+		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script> 
+-->
     <script  src="{{ asset('js/app.js') }}"></script>
+	
 </body>
 </html>

@@ -77,6 +77,9 @@ class ContactUpdate extends Component {
 			
 		});
     }
+	_handleNameChange() {
+		this.setState({ [event.target.ref]: event.target.value });
+	 }
 	render() {
 	  return (
 			<div className="modal fade" tabIndex="-1" role="dialog" id="show-modal-update">
@@ -87,7 +90,80 @@ class ContactUpdate extends Component {
 					<h4 className="modal-title">Edit contact</h4>
 				  </div>
 				  <div className="modal-body">
-					Are you sure you want to update contact?
+					<form>
+					<div className="form-group">
+					<label htmlFor="editName" className="control-form-label">Name</label>
+					<div className="input-group">
+					<div className="input-group-addon ">
+					<span className="glyphicon glyphicon-user"></span>
+					</div>
+
+					<input className="form-control " type="text" id="editName" name="name" ref="edit_name" onChange={this._handleNameChange} defaultValue={this.props.contact.name}  />
+					</div>
+					</div>
+					<div className="form-group ">
+					<label htmlFor="editBirthDate" className="control-form-label">Birth date</label>
+					<div className="input-group">
+					<div className="input-group-addon ">
+					<span className="glyphicon glyphicon-calendar"></span>
+					</div>
+					<input className="form-control" type="date" id="editBirthDate" name="editBirthDate" ref="edit_birth_date" onChange={this._handleNameChange} defaultValue={this.props.contact.birth_date} />
+					</div>
+					</div>
+					<div className="form-group ">
+					<label htmlFor="editPhone" className="control-form-label">Telephone</label>
+					<div className="input-group">
+					<div className="input-group-addon ">
+					<span className="glyphicon glyphicon-phone-alt"></span>
+					</div>
+					<input className="form-control " type="tel" id="editPhone" name="editPhone"  ref="edit_phone" onChange={this._handleNameChange} defaultValue={this.props.contact.phone}/>
+					</div>
+					</div>
+					<div className="form-group">
+					<label htmlFor="editEmail" className="control-form-label">Email</label>
+					<div className="input-group">
+					<div className="input-group-addon ">
+					<span className="glyphicon glyphicon-envelope"></span>
+					</div>
+					<input className="form-control" type="email" id="editEmail" name="editEmail" ref="edit_email" onChange={this._handleNameChange} defaultValue={this.props.contact.email} />
+					</div>
+					</div>
+					<div className="form-group">
+					<label htmlFor="editAddress" className="control-form-label">Adress</label>
+					<div className="input-group">
+					<div className="input-group-addon ">
+					<span className="glyphicon glyphicon-map-marker"></span>
+					</div>
+					<input className="form-control" type="text" id="editAddress" name="editAddress" ref="edit_address" onChange={this._handleNameChange} defaultValue={this.props.contact.address} />
+					</div>
+					</div>
+					<div className="form-group">
+					<label htmlFor="editCompany" className="control-label">Company</label>
+					<div className="input-group">
+					<div className="input-group-addon ">
+					<span className="glyphicon glyphicon-tower"></span>
+					</div>
+					<input className="form-control" type="text" id="editCompany" name="editCompany" ref="edit_company" onChange={this._handleNameChange} defaultValue={this.props.contact.company} />
+					</div>
+					</div>
+					<div className="form-group">
+					<label htmlFor="editGender" className="control-label">Gender</label>
+					<select className="form-control form-control-md" defaultValue={this.props.contact.gender_flag} onChange={this._handleNameChange} ref="edit_gender" id="editGender" name="editGender">
+					<option value="0">Choose--</option>
+					<option value="1">Male</option>
+					<option value="2">Female</option> 
+
+					</select>
+					</div>
+					<div className="form-group ">
+					<label htmlFor="editNickname" className="control-form-label">Nickname</label>
+					<div className="col-10">
+					<input className="form-control form-control-md" type="text" id="editNickname" name="editNickname" ref="edit_nickname" onChange={this._handleNameChange} defaultValue={this.props.contact.nick_name} />
+					</div>
+					</div>
+					</form>
+					/*Valdation errors display area*/ 
+					<ul className="validation_errors" id={"validation_errors"+this.props.id} ref="validation"></ul>
 				  </div>
 				  <div className="modal-footer">
 					<button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
