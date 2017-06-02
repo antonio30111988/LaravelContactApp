@@ -67,7 +67,8 @@ class ContactPoster extends Component {
 	}
 	render() {
 	  return (
-		<div className="create-contact-area">
+		<div className="create-contact-area collapse" id="create-contact-area" data-scroll-offset="50" >
+			<h2 className="create-contact"> Create new contact: </h2>
 			<input className="contact-input" type="text" placeholder="Name" ref="name" required />
 			<input className="contact-input" type="text" placeholder="Nickname" ref="nickname" />
 			<input className="contact-input" type="email" placeholder="Email" ref="email" required />

@@ -6,7 +6,7 @@ import ContactDisplay from './components/contact-display';
 import ContactPoster from './components/contact-poster';
 import ContactDelete from './components/contact-delete';
 import ContactUpdate from './components/contact-update';
-import ContactSearch from './components/contact-search';
+import ContactAudits from './components/contact-audits';
 
 //main app component
 class Contact extends Component {
@@ -22,7 +22,8 @@ class Contact extends Component {
 			displayedContacts: [],
 			query:'',
 			id:'',
-			updateContact:'',
+			updateContact:'', 
+			isEditing: false
 		};
 	}
 	componentDidMount() {
@@ -30,24 +31,28 @@ class Contact extends Component {
 	}
 	handleUpdate (contact) {
 		//const allContacts = this.state.allContacts.filter(r => r.id !== id)
-		
-		this.setState({updateContact:contact});
+		console.log("NAME "+contact.name);
+		this.setState({updateContact:contact,isEditing: !this.state.isEditing});
 		//alert("ZZ "+this.state.id);
 	}
 	makeUpdate (contact) {
+		console.log("id..."+contact.id);
 		const allContacts = this.state.allContacts.map(r => { 
+		
 			if (r.id !== contact.id) return r; 
+			console.log("return id..."+contact.id);
 			return contact; 
 		})
 		if(this.state.displayedContacts.length>0){
+			console.log("DISPLAYED... YES");
 			const displayedContacts = this.state.displayedContacts.map(r => { 
 			if (r.id !== contact.id) return r; 
 			return contact; 
 		})
 		}else{
-			const displayedContacts ='';
+			var displayedContacts ='';
 		}
-
+console.log("set state... YES");
 		this.setState({allContacts:allContacts,displayedContacts: displayedContacts});
 	}
 	handleDelete (ide) {
@@ -67,7 +72,7 @@ class Contact extends Component {
 	}
 	handleSearch(event) {
     var searchQuery = event.target.value.toLowerCase();
-	 var options = $('.select-search-options').val();
+	 //var options = $('.select-search-options').val();
 	 //alert(options[0]);
 	// return false;
   var value = [];
@@ -78,19 +83,23 @@ class Contact extends Component {
 	$(".no-results").addClass('hide').html("");
 	if(searchQuery!==""){
 		var displayedContacts = this.state.allContacts.filter(function(el) {
-		  var searchValue = el.name.toLowerCase();
-		  var result=searchValue.indexOf(searchQuery) !== -1;
-			 for (var i = 0, l = options.length; i < l; i++) {
-				//if (options[i].selected) {
-				  //value.push(options[i].value);
-				  var opcija=options[i];
-				  var searchValue=el.opcija.value.toLowerCase();
-				  result+=" && "+searchValue.indexOf(searchQuery) !== -1;
-				//}
-			  } 
-			  alert("result:   "+result); 
-			  return false;
-		  return searchValue.indexOf(searchQuery) !== -1;
+		  var searchName = el.name.toLowerCase();
+		  var searchAddress = el.address.toLowerCase();
+		  var searchCompany = el.company.toLowerCase();
+		  var searchEmail = el.email.toLowerCase();
+		  var searchPhone = el.phone.toLowerCase();
+		  var searchNickname = el.nick_name.toLowerCase();
+		  var searchBirthdate = el.birth_date.toLowerCase();
+		  var searchGender = el.gender.toLowerCase();
+		  
+		  //var result=searchValue.indexOf(searchQuery) !== -1;
+			
+			var filteredResults=searchName.indexOf(searchQuery) !== -1 || searchAddress.indexOf(searchQuery) !== -1 ||
+			 searchCompany.indexOf(searchQuery) !== -1 || searchEmail.indexOf(searchQuery) !== -1 || searchPhone.indexOf(searchQuery) !== -1 ||
+			searchNickname.indexOf(searchQuery) !== -1 || searchBirthdate.indexOf(searchQuery) !== -1  || searchGender.indexOf(searchQuery) !== -1;
+			// alert("result:   "+result); 
+			 // return false;
+		  return filteredResults;
 			
 		});
 		if(displayedContacts.length<=0){
@@ -128,9 +137,7 @@ class Contact extends Component {
 	}
 	render() {
 		if(this.state.displayedContacts.length<=0){
-				alert("fdg");
 			if($(".no-results").is(':visible') ){
-alert("visible");				
 				var printContacts='';
 		}else{
 				var handleContacts = this.state.allContacts.map(function(contact) {
@@ -141,7 +148,6 @@ alert("visible");
 		}
 		}else{
 			 
-			alert("fdg2"+this.state.displayedContacts);
 			var handleFilteredContacts = this.state.displayedContacts.map(function(contact) {
 				
 				return <ContactDisplay key={contact.id} id={contact.id} contact={contact}  handleUpdateRecord={this.handleUpdate} handleDeleteRecord={this.handleDelete} />
@@ -150,30 +156,22 @@ alert("visible");
 			var printContacts=handleFilteredContacts;
 		}
 		
+		
 		return (
 			<div>
 			  <ContactHeader />
 			  <ContactPoster refreshContacts={this._getContacts} />
-			  <div className="searchable">
+			  <div className="searchable collapse" id="search-contacts-area" data-scroll-offset="70" >
 			<h2 className="search-contacts create-contact"> Search Contacts: </h2>
-			  <input type="text" placeholder="Default (by name)" className="contact-input search-field" onChange={this.handleSearch.bind(this)}/>
-			  
-			<select className="contact-input select-search-options js-states " multiple  ref="search_options"  >
-				<option value="name">Name</option> 
-				<option value="birth_date">Birth date</option>
-				<option value="phone">Phone</option>
-				<option value="email">Email</option>
-				<option value="address">Address</option>
-				<option value="company">Company</option>
-				<option value="nick_name">Company</option>
-				<option value="gender">Gender</option>
-			</select>
+			  <input type="text" placeholder="by any content" className="contact-input search-field" onChange={this.handleSearch.bind(this)}/>
 			<hr className="divide"/>
 			<div className="alert alert-info no-results hide"></div> 
 		  </div>
-			<ContactDelete  id={this.state.id} deleteContacts={this.makeDelete} />
-			<ContactUpdate  contact={this.state.updateContact} updateContacts={this.makeUpdate} />
+		  			  <ContactAudits /> 
 
+			<ContactDelete  id={this.state.id} deleteContacts={this.makeDelete} />
+			
+			<ContactUpdate  contact={this.state.updateContact} updateContacts={this.makeUpdate} />
 			  {printContacts} 
 			</div>
 		);

@@ -14,15 +14,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	
 	{{-- jQuery and Select2 3rd party library --}}
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<script>$(document).ready(function(){
-	//alert("dsdsfv");
-	/*$(".select-search-options").select2({
-	  placeholder: "Select search by fields",
-	});*/
-}); </script>
+		{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		--}}
 </head>
 <body>
     <div id="app">
@@ -92,7 +85,7 @@
 		</div>
         @yield('content')
 		
-		<footer class="page-footer blue center-on-small-only">
+		<footer class="page-footer footer blue center-on-small-only">
 		 <!--Copyright-->
     <div class="footer-copyright">
         <div class="footer-content container-fluid">
@@ -105,22 +98,7 @@
     </div>
 	<script type="text/javascript">
 		var csrf_token = '<?php echo csrf_token(); ?>'; 
-		
-		function debounce(fn, delay) {
-  var timer = null;
-  return function () {
-    var context = this, args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      fn.apply(context, args);
-    }, delay);
-  };
-}
     </script> 
-    <!-- Scripts -->
-		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script> 
--->
     <script  src="{{ asset('js/app.js') }}"></script>
-	
 </body>
 </html>

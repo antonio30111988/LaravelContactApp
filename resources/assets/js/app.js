@@ -10,10 +10,23 @@ require('./react_main.js');
 
 
 $(document).ready(function(){
-	//alert("dsdsfv");
-	/*$(".select-search-options").select2({
-	  placeholder: "Select search by fields"
-	});*/
+    $(".scrollto").click(function(event) {
+        event.preventDefault(); 
+		alert("scroll");
+
+        var defaultAnchorOffset = 0;
+
+        var anchor = $(this).attr('data-attr-scroll');
+alert("anchor"+anchor);
+        var anchorOffset = $(anchor).attr('data-scroll-offset');
+        if (!anchorOffset)
+            anchorOffset = defaultAnchorOffset; 
+
+		alert("scroll"+anchorOffset);
+        $('html,body').animate({ 
+            scrollTop: $(anchor).offset().top + anchorOffset
+        }, 1000);        
+    });
 }); 
 
 

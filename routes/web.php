@@ -58,6 +58,12 @@ Route::group(['middleware' => ['web']], function () {
 		//list all
 		Route::get('/list', 'HomeController@getAll');
 		
+		//export contacts to VD CARD
+		Route::post('/export', 'HomeController@exportToVdCard');
+		
+		//app audit
+		Route::get('/audits', 'HomeController@listAppAudit');
+		
 	});
 });
 

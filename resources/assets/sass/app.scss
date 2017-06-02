@@ -73,7 +73,7 @@ a.actual
 {
 	color:#2579a9 !important;
 	font-weight:bold !important;
-	left: 100%;
+	left: 50px;
 }
 .contact-input 
 {
@@ -216,6 +216,17 @@ hr.divide
 	background-color: #297ea9;
     height: 2px;
 }
+.features-area
+{
+	padding-bottom:35px;
+	margin-left: 5px;
+    margin-right: 5px;
+}
+.btn-edit, .btn-edit:hover {
+    color: #fff;
+    background-color: #297ea9;
+    border-color: #297ea9;
+}
 
 /*Footer*/
 .footer-content
@@ -230,8 +241,9 @@ hr.divide
 }
 .social-logins{text-align:center;}
 .no-results{text-align:center;}
-html,body{
-    height: 100%;
+
+  .footer {
+ 
 }
 
 // Media queries
