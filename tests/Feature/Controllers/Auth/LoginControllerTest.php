@@ -9,8 +9,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class LoginController extends TestCase
 {
-	use DatabaseMigrations;
-	/**
+    use DatabaseMigrations;
+    /**
      * Check if login page available
      *
      * @return void
@@ -19,10 +19,10 @@ class LoginController extends TestCase
     {
         $this->visit('/login')
              ->see('Login')
-             ->dontSee('Contacts List');
+             ->dontSee('Contacts Manager');
     }
-	
-	/**
+    
+    /**
      * Test Login Feature
      *
      * @return void
@@ -30,40 +30,41 @@ class LoginController extends TestCase
     public function testLoginPass()
     {
          $this->visit('/login')
-			 ->type('Test Name', 'name')
-			 ->type('test@name.com', 'email')
-			 ->check('remember')
-			 ->press('Login')
-			 ->seePageIs('/home');
+             ->type('Test Name', 'name')
+             ->type('test@name.com', 'email')
+             ->check('remember')
+             ->press('Login')
+             ->seePageIs('/contacts');
     }
-	
-	/**
+    
+    /**
      * Check if logged in user saved in database
      *
      * @return void
      */
     public function testLoggedInUserInDb()
     {
-       if($this->testLoginPass())
-	   $this->seeInDatabase('users', ['name' => 'Test Name','email' => 'test@name.com']);
-		else
-			return true; 
+        if ($this->testLoginPass()) {
+            $this->seeInDatabase('users', ['name' => 'Test Name','email' => 'test@name.com']);
+        } else {
+            return true;
+        }
     }
-	
-	
-	/**
+    
+    
+    /**
      * Test Logout Feature
      *
      * @return void
      */
     public function testLogoutPass()
     {
-        if($this>testLoginPass){
-			$this->visit('/login')
-				->click('Logout')	
-				->seePageIs('/login');
-		}
-		else 
-			return true;	
+        if ($this>testLoginPass) {
+            $this->visit('/login')
+                ->click('Logout')
+                ->seePageIs('/login');
+        } else {
+            return true;
+        }
     }
 }

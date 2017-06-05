@@ -10,8 +10,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class RegisterController extends TestCase
 {
     use DatabaseMigrations;
-	
-	/**
+    
+    /**
      * Test Sign Up Feature
      *
      * @return void
@@ -19,15 +19,15 @@ class RegisterController extends TestCase
     public function testSignUpPass()
     {
          $this->visit('/register')
-			 ->type('Test Name', 'name')
-			 ->type('test@name.com', 'email')
-			 ->type('password111test', 'password')
-			 ->type('password111test', 'password-confirmation')
-			 ->press('Sign Up')
-			 ->seePageIs('/login');
+             ->type('Test Name', 'name')
+             ->type('test@name.com', 'email')
+             ->type('password111test', 'password')
+             ->type('password111test', 'password-confirmation')
+             ->press('Sign Up')
+             ->seePageIs('/login');
     }
-	
-	/**
+    
+    /**
      * Check if register page available
      *
      * @return void
@@ -36,19 +36,20 @@ class RegisterController extends TestCase
     {
         $this->visit('/register')
              ->see('Sign Up')
-             ->dontSee('Contacts List');
+             ->dontSee('Contacts Manager');
     }
-	
-	 /**
+    
+     /**
      * Check if register user saved in database
      *
      * @return void
      */
     public function testRegisteredUserInDb()
     {
-       if($this->testSignUpPass())
-	   $this->seeInDatabase('users', ['name' => 'Test Name','email' => 'test@name.com']);
-		else
-			return true;
+        if ($this->testSignUpPass()) {
+            $this->seeInDatabase('users', ['name' => 'Test Name','email' => 'test@name.com']);
+        } else {
+            return true;
+        }
     }
 }

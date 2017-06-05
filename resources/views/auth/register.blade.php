@@ -80,4 +80,6 @@
         </div>
     </div>
 </div>
+<style>.page-footer{bottom:0;}</style>
+
 @endsection

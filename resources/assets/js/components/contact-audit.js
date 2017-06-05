@@ -1,30 +1,40 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
-//Contact search component
+//Contact audit row component
 class ContactAudit extends Component {
-	 constructor(props, context) {
+	constructor(props, context) {
 		super(props, context);
 		this.state = {
-		  modified:this.props.modified,
+			modified:this.props.modified,
 		}
 	}
 	render() { 
-		var handleAudit="";
 		var handleAudit = [];
-
-for (var item in this.state.modified) { 
-    handleAudit.push(<tr key={this.props.id+"i"}>
-						<td><strong>{item}</strong></td>
-						<td className="danger">{item.old}</td>
-						<td className="success">{item.new}</td>
-					</tr>); 
-}	
+		var counter=0;
+		//get modified data to table row in arary
+		for (var item in this.state.modified) { 
+			if (!this.state.modified.hasOwnProperty(item)) continue;
+			var values=[];
+			var obj=this.state.modified[item];
+			for (var i in obj) {
+				 if(!obj.hasOwnProperty(i)) continue;
+				values.push(obj[i]);
+			}
+			
+			handleAudit.push(
+				<tr key={counter}>
+					<td><strong>{item}</strong></td>
+					<td className="danger">{values[0]}</td>
+					<td className="success">{values[1]}</td>
+				</tr>
+			); 
+			
+			counter++;
+		}	
 				
-	  return (
+		return (
 			<div className="audit-item" id={ "item-"+this.props.metadata.audit_id} >
 				<p>On {this.props.date} you  updated this record via {this.props.metadata.audit_url}: </p>
-			
 				<table className="table table-striped">
 					<thead>
 						<tr>
@@ -35,10 +45,10 @@ for (var item in this.state.modified) {
 					</thead>
 					<tbody>
 						{handleAudit}						
-					 </tbody>
+					</tbody>
 				</table>				 
 			</div>
-	  );
+		);
 	}
 }
 

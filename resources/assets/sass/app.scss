@@ -1,10 +1,8 @@
 $fa-font-path: "../../../node_modules/font-awesome/fonts" !default; 
-
 @import 'node_modules/font-awesome/scss/font-awesome.scss';
 
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
 
 // Variables
 @import "variables";
@@ -89,8 +87,9 @@ a.actual
 h2.create-contact{font-size:25px;}
 #validation_errors
 {
-	margin: 40px auto;
+	margin: 10% auto;
     width: 100%;
+	padding-left: 5%;
 }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus 
 {
@@ -109,7 +108,6 @@ h2.create-contact{font-size:25px;}
 {
     color: #2579a9;
 }
-
 
 /*Contact Manager*/
 .contact-item
@@ -157,9 +155,11 @@ h2.create-contact{font-size:25px;}
 .contact-main h3 
 {
     display: inline;
+    font-size:1.7142em;
     padding: 15px;
 	text-transform:uppercase;
 }
+.addit-title{font-weight:bold;padding-right: 5px;}
 .contact-birth-date
 {
 	position: absolute;
@@ -168,16 +168,16 @@ h2.create-contact{font-size:25px;}
 }
 .contact-info
 {
-	margin-left:30px;
+	margin-left:5%;
 	margin-top: 55px;
 }
 .contact-info h4
 {
-	font-size:20px;
+	font-size:1.4285em;
 }
 .contact-info .contact-content
 {
-	margin-left:15px;
+	margin-left:3%;
 }
 .contact-phone
 { 
@@ -185,20 +185,18 @@ h2.create-contact{font-size:25px;}
 }
 #editName
 {
-	width: 175px;
     color: #297ea9;
-	font-size: 20px;
+	font-size: 1.4285em;
 }
 #editBirthDate
 {
-	width: 180px;
     color: #297ea9;
-    font-size: 20px;
+    font-size: 1.4285em;
 }
 .editInputs
 {
-	margin-left: 10px;
-    font-size: 22px;
+	margin-left: 5%;
+    font-size: 1.5714em;
     border-radius: 3px;
     border-color: #d6eefb;
 }
@@ -209,7 +207,7 @@ h2.create-contact{font-size:25px;}
 	
 }
 .create-contact-area{margin-bottom:55px;}
-.select-gender{margin-left: 45px;}
+.select-gender{margin-left: 5%;}
 #nickname_input{font-size:16px;}
 hr.divide
 {
@@ -219,33 +217,42 @@ hr.divide
 .features-area
 {
 	padding-bottom:35px;
-	margin-left: 5px;
-    margin-right: 5px;
+	margin-left: 5%;
+    margin-right: 5%;
 }
-.btn-edit, .btn-edit:hover {
+.btn-edit, .btn-edit:hover 
+{
     color: #fff;
     background-color: #297ea9;
     border-color: #297ea9;
 }
+.validation_errors > li{padding-left: 5%;}
 
 /*Footer*/
+#contento{padding-bottom: 70px;}
+.footer
+{
+	position:absolute; 
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: #9bdbfc;
+    margin-bottom: 0;	
+}
 .footer-content
 {
 	text-align: center;
     background: #9bdbfc;
-    height: 50px;
+    
 }
 .footer-content p
 {
-	line-height: 50px;
+	line-height: 70px;
 }
 .social-logins{text-align:center;}
 .no-results{text-align:center;}
-
-  .footer {
  
-}
 
-// Media queries
+/* Media queries for reposnive Ui */
 @import "media"; 
  

@@ -6,22 +6,40 @@ User sign-up and login can be done regular or acroas Facebook. Contact/s can be 
 
 Implemented functionalities are:
 
-- Exporting a single contact or all contacts to vCard
-- Searching
-- Record change/audit logging
-- Authentication with Facebook or other OAuth providers
+- view layer is all done using ReactJS; 
+- UI is responsive using mostly media queries and Twitter Bootsrap
+- backend communication with MySQL is done using simple Laravel API 
+- CRUD fetaures for user contacts. User can only see their list of contacts;
+- Exporting a single contacts to vCard in .vcf files (PATH:storage/app/public/vcf);
+- Searching Contacts (real live search);
+- Record change/audit logging (record last changes for logged in user contacts);
+- Authentication with Facebook, Google and Github with standard Login/Sign Up;
 - Friendly URLs (URL slugs)
-- Interface i18n to any language(s) you like, even if it’s a made-up language like pirate or l33t speak.
+- code is cleared and fixed by CodeSniffer and Javascript code by EsLint;
 
-Application have unit/acceptance test using PHPUnit. For run it, please type in your CLI:
+Application have unit/acceptance test using PHPUnit. Please type in your CLI:
 
--...
+$ composer test 
 
-For get the app up and running on their system please do the following in main project path:
+for automate testing with results. Failed and succcess cases covered.
 
-$ git clone https://github.com/rajikaimal/react-laravel.git
+For watch development changes just run in new CLI session:
+
+$npm run watch
+
+For get the app up and running on your system please do the following in main project path in your choosen  server environment:
+
+- install your local environment by simply download from Web. Most popular are XAMPP/LAMP/WAMP preinstalled environments on Apache server.I used Xampp here.You can too or if you want maybe try Nginx/Vagrant/Homestead, for better simulation of production with Docker integration.
+
+In your CLI go to Xampp/installation/folder/path and create folder laravel-contact-app:
+
+$ cd your/xampp/installation/folder/path
+$ cd htdocs
+$ mkdir laravel-contact-app
 $ cd laravel-contact-app
+$ git clone https://github.com/rajikaimal/react-laravel.git
 $ npm install
+$ composer install
 
 echo "create database lara_contacts" | mysql -u root -p
 # type password here
@@ -34,12 +52,14 @@ Create the scaffold for login:
 
 $ php artisan make:auth
 
-Make app listen to 8000 on lovalhost:
+Make app listen to strictly on port 8000 in localhost:
 
 $ php -S localhost:8000 -t public
 
-Start the local server (XAMPP, WAMP, LAMP) and visit the page http://localhost:8000/.
+Start the local server (XAMPP, WAMP, LAMP) and visit the page http://localhost:8000/. This is built-in server very flexible for testing although not so stable as local web servers or even more like hosting servers.
 
+In footer is provided link to ContactApp Github repository.
 
 Thanks for your time ;)
+Antonio
 

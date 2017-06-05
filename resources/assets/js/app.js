@@ -8,44 +8,44 @@
 require('./bootstrap');
 require('./react_main.js');
 
-
+//jquery on dom load
 $(document).ready(function(){
-    $(".scrollto").click(function(event) {
+    //on main header menu item click scroll to point
+	$(".scrollto").click(function(event){
         event.preventDefault(); 
-		alert("scroll");
-
+		//alert("scroll");
         var defaultAnchorOffset = 0;
-
         var anchor = $(this).attr('data-attr-scroll');
-alert("anchor"+anchor);
+		//alert("anchor"+anchor);
         var anchorOffset = $(anchor).attr('data-scroll-offset');
         if (!anchorOffset)
             anchorOffset = defaultAnchorOffset; 
 
-		alert("scroll"+anchorOffset);
+		//animate down from top of page
         $('html,body').animate({ 
-            scrollTop: $(anchor).offset().top + anchorOffset
+            scrollTop: $(anchor).offset().top - anchorOffset
         }, 1000);        
     });
+	
+	//on click export contact to vCard
+	$(document.body).on('click','.export',function(){
+		if($(this).attr("data-id")){
+			//alert("click");
+			$("#"+id).removeClass("btn-success");
+			$("#"+id).addClass("btn-warning");
+			$("#"+id).text("to vCard");
+		
+			var id=$(this).attr("data-id");
+		
+			$.post('/contacts/export', {_token: csrf_token,id:id}, function(data) {
+				//alert("joo");
+				$("#"+id).removeClass("btn-warning");
+				$("#"+id).addClass("btn-success");
+				$("#"+id).text("Saved");
+				//console.log(data);
+				//console.log(data.id);
+			});
+		}
+	});
 }); 
 
-
-
-//import Contact from './react_main'; 
-
-
-//require('./react_main');
-//window.Vue = require('vue');
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-/*Vue.component('example', require('./components/Example.vue'));
-
-const app = new Vue({
-    el: '#app'
-});
-*/

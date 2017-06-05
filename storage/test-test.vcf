@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+REV:2017-06-02T20:02:17Z
+N;CHARSET=utf-8:test;;test;;
+FN;CHARSET=utf-8:test test
+ORG;CHARSET=utf-8:Testing Company
+TITLE;CHARSET=utf-8:
+ROLE;CHARSET=utf-8:
+EMAIL;INTERNET:antonio.test@test.com
+TEL;PREF;WORK:
+TEL;WORK:018889
+ADR;WORK;POSTAL;CHARSET=utf-8:;;Adrress Test;;;;
+END:VCARD

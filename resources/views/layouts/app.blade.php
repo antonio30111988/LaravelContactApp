@@ -32,17 +32,12 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/contacts') }}">
                         {{ config('app.name', 'Contacts Managment') }}
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
@@ -89,7 +84,7 @@
 		 <!--Copyright-->
     <div class="footer-copyright">
         <div class="footer-content container-fluid">
-           <p> © {{ Carbon\Carbon::now()->year}} Copyright by <a target="_blank" href="https://github.com/antonio30111988/LaravelContactApp/blob/master/README.md"> Antonio Lolić </a></p>
+           <p> © {{ Carbon\Carbon::now()->year}} Made by <a target="_blank" href="https://github.com/antonio30111988/LaravelContactApp/blob/master/README.md"> Antonio Lolić </a></p>
 
         </div>
     </div>

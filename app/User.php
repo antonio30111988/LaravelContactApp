@@ -14,22 +14,22 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 class User extends Authenticatable implements AuditableContract
 {
     use Notifiable;
-	use Auditable;
+    use Auditable;
 
-	 /**
+     /**
      * Should the audit be strict?
      *
      * @var bool
      */
     protected $auditStrict = true;
-	
-	/**
+    
+    /**
      * Should the timestamps be audited?
      *
      * @var bool
      */
     protected $auditTimestamps = true;
-	
+    
     /**
      * The attributes that are mass assignable.
      *

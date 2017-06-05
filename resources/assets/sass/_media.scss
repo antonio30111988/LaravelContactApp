@@ -5,17 +5,42 @@
 
 @media only screen and (max-width: 800px) 
 {
-    body {
-        background-color: lightblue;
-    }
+ 
 }
 
 @media only screen and (max-width: 550px) 
 {
-    
+    body {
+    font-size: 0.975em;
+    }
+    .contact-item{
+    	width:100%;
+    	max-width:530px;
+    }
+    .main-title{font-size:14px; }
+    .contact-name,.contact-birth-date
+    { 
+    	font-size:12px;
+    	display: inline-block;
+    	max-width: 100%;
+	}
+
 }
 
 @media only screen and (max-width: 380px) 
 {
-    
+     body {
+    font-size: 0.925em;
+    } 
+    .main-title{font-size:12px; }
+    .do-edit-save
+	{
+		position:relative;
+		padding:0;
+	}
+	.do-edit{margin-top:10px;}
+	.contact-name,.contact-birth-date
+    { 
+    	font-size:10px;
+    }
 }

@@ -15,27 +15,28 @@
 View::addExtension('html', 'php');
 
 Route::group(['middleware' => ['web']], function () {
-	
 	//Homepage - Login
-	Route::get('/', function () {
+	Route::get('/', function () 
+	{
 		if(\Auth::check())
-			return redirect('home');
+			return redirect('contacts');
 
 		return view('auth.login');
 	});
-	Route::get('/login', function () {
+	Route::get('/login', function () 
+	{
 		if(\Auth::check())
-			return redirect('home');
+			return redirect('contacts');
+		
 		return view('auth.login');
 	})->name('login');
 	
 	//Auth scafollding
 	Auth::routes();
-	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/contacts', 'ContactController@index')->name('contacts');
 	Auth::routes();
-	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/contacts', 'ContactController@index')->name('contacts');
 
-	
 	//Auth routes for Social Lite Authentication
 	Route::get('auth/{provider}', 'Auth\LoginController@redirectionToProvider');
 	Route::get('auth/{provider}/callback', 'Auth\LoginController@handlingProviderCallback');
@@ -47,22 +48,20 @@ Route::group(['middleware' => ['web']], function () {
 	*****************/
 
 	//Route group with prefix
-	Route::group(['prefix'=>'contacts'],function(){
-		
+	Route::group(['prefix'=>'contacts'],function()
+	{
 		//create
-		Route::post('/create', 'HomeController@create');
+		Route::post('/create', 'ContactController@create');
 		//delete
-		Route::post('/delete', 'HomeController@delete');
+		Route::post('/delete', 'ContactController@delete');
 		//update
-		Route::post('/update', 'HomeController@update');
+		Route::post('/update', 'ContactController@update');
 		//list all
-		Route::get('/list', 'HomeController@getAll');
-		
-		//export contacts to VD CARD
-		Route::post('/export', 'HomeController@exportToVdCard');
-		
+		Route::get('/list', 'ContactController@getAll');
+		//export contacts to vCard
+		Route::post('/export', 'ContactController@exportToVdCard');
 		//app audit
-		Route::get('/audits', 'HomeController@listAppAudit');
+		Route::get('/audits', 'ContactController@listAppAudit');
 		
 	});
 });

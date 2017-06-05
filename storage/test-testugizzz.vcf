@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+REV:2017-06-02T20:01:43Z
+N;CHARSET=utf-8:testugizzz;;test;;
+FN;CHARSET=utf-8:test testugizzz
+ORG;CHARSET=utf-8:Testing Company
+TITLE;CHARSET=utf-8:
+ROLE;CHARSET=utf-8:
+EMAIL;INTERNET:antonio.toihest@test.com
+TEL;PREF;WORK:
+TEL;WORK:018889
+ADR;WORK;POSTAL;CHARSET=utf-8:;;Adrress Test;;;;
+END:VCARD

@@ -29,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/contacts';
 
     /**
      * Create a new controller instance.
@@ -44,16 +44,17 @@ class LoginController extends Controller
     /**
      * Redirect the user to the OAuth Provider.
      *
-     * @param Provider name
+     * @param Provider name $provider
      *
      * @return Response
      */
     public function redirectionToProvider($provider)
     {
-        if($provider=="google" )
-		return Socialite::driver($provider)->scopes(['profile','email'])->redirect();
-	
-	return Socialite::driver($provider)->redirect(); 
+        if ($provider=="google") {
+            return Socialite::driver($provider)->scopes(['profile','email'])->redirect();
+        }
+    
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
@@ -64,20 +65,18 @@ class LoginController extends Controller
      *
      * @return Response
      */
-    public function handlingProviderCallback(Request $request,$provider)
+    public function handlingProviderCallback(Request $request, $provider)
     {
-        if($provider=="facebook" )
-		$user = Socialite::with($provider)->user();
-		else
-		$user = Socialite::driver($provider)->user();
-		
-		//if($user->name==null)
-		//	$user->name="No name";
-
+        if ($provider=="facebook") {
+            $user = Socialite::with($provider)->user();
+        } else {
+            $user = Socialite::driver($provider)->user();
+        }
+        
         $authUser = $this->findOrCreateUser($user, $provider);
-		
-		if(!$authUser) 
-			return redirect('/')->withNotification("User with same email adress already exist!");
+        if (!$authUser) {
+            return redirect('/')->withNotification("User with same email adress already exist!");
+        }
         
         //login and redirect to homepage
         Auth::login($authUser, true);
@@ -90,20 +89,23 @@ class LoginController extends Controller
      *
      * @param  $user Socialite user object
      * @param $provider Auth provider
+     *
      * @return  User object
      */
     public function findOrCreateUser($user, $provider)
     {
+        //get auth user if exist
         $authUser = User::where('provider_id', $user->id)->first();
         if ($authUser) {
             return $authUser;
         }
-		$emailExists=User::where('email', $user->email)->first();
-		
-		if($emailExists)
-			return false;
-		
-		
+        
+        $emailExists=User::where('email', $user->email)->first();
+        
+        if ($emailExists) {
+            return false;
+        }
+        
         return User::create([
             'name'     => $user->name,
             'email'    => $user->email,

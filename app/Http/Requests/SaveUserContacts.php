@@ -17,8 +17,8 @@ class SaveUserContacts extends FormRequest
     public function authorize()
     {
         //return true;
-		return User::where('id', Auth::id())->exists();
-    } 
+        return User::where('id', Auth::id())->exists();
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -30,25 +30,25 @@ class SaveUserContacts extends FormRequest
         return [
             'name' => 'required|string|unique:contacts|max:100',
             'nick_name' => 'nullable|max:50',
-            'gender' => 'nullable|max:1',
-            'email' => 'required|email|unique:contacts', 
+            'gender' => 'nullable|max:1|numeric',
+            'email' => 'required|email|unique:contacts',
             'phone' => 'required|numeric|phone_number',
             'address' => 'required|alpha_num_space',
             'company' => 'required',
             'birth_date' => 'present|date|before_or_equal:today'
         ];
     }
-	
-	/**
+    
+    /**
      * Add Custom Validation messages
      *
      * @return array
      */
-	public function messages()
-	{
-		return [
-			'phone_number' => 'The :attribute field must start with 01.',
-			'alpha_num_space' => 'The :attribute field can consist of only letters, numbers and spaces.', 
-		];
-	}
+    public function messages()
+    {
+        return [
+            'phone_number' => 'The :attribute field must start with 01.',
+            'alpha_num_space' => 'The :attribute field can consist of only letters, numbers and spaces.',
+        ];
+    }
 }

@@ -8,6 +8,8 @@
         "php": ">=5.6.4",
         "doctrine/dbal": "^2.5",
         "guzzlehttp/guzzle": "^6.2",
+        "jeroendesloovere/vcard": "^1.4",
+        "laravel/dusk": "^1.1",
         "laravel/framework": "5.4.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
@@ -52,5 +54,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit"
     }
 }
