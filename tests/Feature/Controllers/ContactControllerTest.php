@@ -3,7 +3,6 @@
 namespace Tests\Feature\Controllers;
 
 use Tests\TestCase;
-use App\Http\Controllers\FileConverterController as Converter;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -13,6 +12,9 @@ class ContactControllerTest extends TestCase
 {
     use WithoutMiddleware;
     
+    public $baseUrl = 'http://localhost:8000';
+
+    
     public function setUp()
     {
         parent::setUp();
@@ -20,21 +22,6 @@ class ContactControllerTest extends TestCase
         $this->validator = $this->app['validator'];
     }
 
-    public function testSomething()
-    {
-        // Stop here and mark this test as incomplete.
-        $this->markTestIncomplete(
-        'This test has not been implemented yet.'
-        );
-        
-        if (!extension_loaded('mysqli')) {
-            $this->markTestSkipped(
-            'The MySQLi extension is not available.'
-            );
-        }
-    }
-
-    
     /**
      * Check if contacts homepage is accessible
      *
@@ -44,8 +31,7 @@ class ContactControllerTest extends TestCase
     {
         $this->visit('/contacts')
              ->see('Contacts Manager')
-             ->dontSee('Login')
-             ->dontSee('Sign Up');
+             ->dontSee('Github');
     }
     
     /**
@@ -82,7 +68,7 @@ class ContactControllerTest extends TestCase
     public function testSearchInputOpenOnClick()
     {
         $this->visit('/contacts')
-            ->click('SeaRch Contacts')
+            ->click('Search Contacts')
              ->see('Search Contacts:');
     }
     
@@ -91,7 +77,7 @@ class ContactControllerTest extends TestCase
     */
     public function testHompageDisplayed()
     {
-        $response$this->call('GET', '/contacts');
+        $response=$this->call('GET', '/contacts');
         
          $this->assertEquals(200, $response->getStatusCode());
     }
@@ -103,7 +89,7 @@ class ContactControllerTest extends TestCase
     {
         $this->visit('/contacts')
             ->click('to vCard')
-             ->see('Saved');
+            ->see('Saved');
     }
 
     /**
@@ -123,12 +109,12 @@ class ContactControllerTest extends TestCase
         ];
         
         $data = [
-            'address'     => 'Test Street 222',
+            'address'     => 'Test Street',
             'name'    => 'Test Tester',
-            'phone'    => '175767645465',
+            'phone'    => '0175767645465',
             'company'    => 'Test Author',
-            'email'    => 'test@test.com',
-            'birth_date'    => '20002-11-11',
+            'email'    => 'test@tt.com',
+            'birth_date'    => '2002-11-11',
             'nick_name'    => 'Testko',
             'gender'    => 1
         ];
@@ -171,7 +157,7 @@ class ContactControllerTest extends TestCase
     /**
     *  Validate several case for form fields against rules array
     */
-    public function valid_first_name()
+    public function valid_fields_cases()
     {
         $this->assertTrue($this->validateField('name', 'Ante'));
         $this->assertTrue($this->validateField('name', 'John Wick'));
@@ -190,14 +176,14 @@ class ContactControllerTest extends TestCase
         $this->assertFalse($this->validateField('phone', ''));
 
         $this->assertTrue($this->validateField('email', 'test@test.com'));
-         $this->assertTrue($this->validateField('email', 'test@gmsil.co'));
-          $this->assertTrue($this->validateField('email', 'google@net.hr'));
+        $this->assertTrue($this->validateField('email', 'test@gmsil.co'));
+        $this->assertTrue($this->validateField('email', 'google@net.hr'));
         $this->assertFalse($this->validateField('email', 'tester'));
         $this->assertFalse($this->validateField('email', 'te@ster'));
-         $this->assertFalse($this->validateField('email', 'te.ster@ttrr'));
-          $this->assertFalse($this->validateField('email', ''));
+        $this->assertFalse($this->validateField('email', 'te.ster@ttrr'));
+        $this->assertFalse($this->validateField('email', ''));
 
-        
+
         $this->assertTrue($this->validateField('address', 'jon'));
         $this->assertFalse($this->validateField('address', 'jon1'));
         $this->assertFalse($this->validateField('address', '$%$&%/##'));
@@ -209,26 +195,26 @@ class ContactControllerTest extends TestCase
         $this->assertFalse($this->validateField('company', ''));
 
         $this->assertTrue($this->validateField('birth_date', '2012-01-29'));
-         $this->assertTrue($this->validateField('birth_date', '1999-05-27'));
-          $this->assertTrue($this->validateField('birth_date', '2007-12-29'));
+        $this->assertTrue($this->validateField('birth_date', '1999-05-27'));
+        $this->assertTrue($this->validateField('birth_date', '2007-12-29'));
         $this->assertFalse($this->validateField('birth_date', '2019-06-11'));
         $this->assertFalse($this->validateField('birth_date', '12:23:56'));
         $this->assertFalse($this->validateField('birth_date', '01/06'));
-        
+
         $this->assertTrue($this->validateField('gender', 0));
-         $this->assertTrue($this->validateField('gender', 1));
-          $this->assertTrue($this->validateField('gender', 2));
+        $this->assertTrue($this->validateField('gender', 1));
+        $this->assertTrue($this->validateField('gender', 2));
         $this->assertFalse($this->validateField('gender', 'female'));
         $this->assertFalse($this->validateField('gender', 'male'));
         $this->assertFalse($this->validateField('gender', 'x'));
 
-        $this->assertTrue($this->validateField('nick_name', 'jon'));
-        $this->assertFalse($this->validateField('nick_name', 'jon1'));
+        $this->assertTrue($this->validateField('nick_name', 'tom'));
+        $this->assertFalse($this->validateField('nick_name', 96976));
     }
 
     protected function getFieldValidator($field, $value)
     {
-       //fecthing rules from UserSaveContact.php Request file and validate field value
+       //fetching rules from UserSaveContact.php Request file and validate field value
         return $this->validator->make(
             [$field => $value],
             [$field => $this->rules[$field]]

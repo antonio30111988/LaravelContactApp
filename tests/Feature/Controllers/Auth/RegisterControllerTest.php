@@ -7,9 +7,12 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class RegisterController extends TestCase
+class RegisterControllerTest extends TestCase
 {
     use DatabaseMigrations;
+    
+    public $baseUrl = 'http://localhost:8000';
+
     
     /**
      * Test Sign Up Feature
@@ -24,7 +27,7 @@ class RegisterController extends TestCase
              ->type('password111test', 'password')
              ->type('password111test', 'password-confirmation')
              ->press('Sign Up')
-             ->seePageIs('/login');
+             ->seePageIs('/contacts');
     }
     
     /**
@@ -44,12 +47,8 @@ class RegisterController extends TestCase
      *
      * @return void
      */
-    public function testRegisteredUserInDb()
+    public function testRegisteredUserNotInDb()
     {
-        if ($this->testSignUpPass()) {
-            $this->seeInDatabase('users', ['name' => 'Test Name','email' => 'test@name.com']);
-        } else {
-            return true;
-        }
+            $this->dontSeeInDatabase('users', ['name' => 'Test Name','email' => 'test@name.com']);
     }
 }

@@ -3,7 +3,6 @@
 namespace Tests\Feature\Controllers;
 
 use Tests\TestCase;
-use App\Http\Controllers\FileConverterController as Converter;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -12,6 +11,9 @@ class ContactApiTest extends TestCase
 {
     use WithoutMiddleware;
     use DatabaseMigrations;
+    
+    public $baseUrl = 'http://localhost:8000';
+
     
     private $http;
 
@@ -22,7 +24,8 @@ class ContactApiTest extends TestCase
      */
     public function setUp()
     {
-        $this->http = new GuzzleHttp\Client(['base_uri' => 'localhost:8000']);
+        parent::setUp();
+        $this->http =new \GuzzleHttp\Client(['base_uri' => 'localhost:8000']);
     }
 
     /**
@@ -106,9 +109,9 @@ class ContactApiTest extends TestCase
 
         $this->assertEquals(422, $response->getStatusCode());
         $this->assertNotEquals("", $data['errors']);
-        $response->assertSessionHasErrors(['phone');
-        $response->assertSessionHasErrors(['email');
-        $response->assertSessionHasErrors(['address');
+        $response->assertSessionHasErrors(['phone']);
+        $response->assertSessionHasErrors(['email']);
+        $response->assertSessionHasErrors(['address']);
     }
 
       /**
@@ -168,8 +171,8 @@ class ContactApiTest extends TestCase
 
         $this->assertEquals(422, $response->getStatusCode());
         $this->assertNotEquals("", $data['errors']);
-        $response->assertSessionHasErrors(['email');
-        $response->assertSessionHasErrors(['phone');
+        $response->assertSessionHasErrors(['email']);
+        $response->assertSessionHasErrors(['phone']);
     }
 
     /**
@@ -199,6 +202,6 @@ class ContactApiTest extends TestCase
     {
         $response = $this->http->request('PUT', 'user-agent-test', ['http_errors' => false]);
 
-        $this->assertEquals(405, $response->getStatusCode());
+        $this->assertEquals(404, $response->getStatusCode());
     }
 }

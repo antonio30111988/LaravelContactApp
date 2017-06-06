@@ -12,15 +12,18 @@
         <testsuite name="Contacts Features Test">
             <directory suffix="Test.php">./tests/Feature/Controllers</directory>
 			<file>ContactControllerTest.php</file>
+            <exclude>./tests/Browser/</exclude>
         </testsuite>
 		<testsuite name="Login and Register">
             <directory suffix="Test.php">./tests/Feature/Controllers/Auth</directory>
 			<file>RegisterControllerTest.php</file>
 			<file>LoginControllerTest.php</file>
+            <exclude>./tests/Browser/</exclude>
         </testsuite>
         <testsuite name="Contacts API Test">
             <directory suffix="Test.php">./tests/Feature</directory>
-            <file>ContactApiTest.php</file>
+            <file>ContactAjaxTest.php</file>
+            <exclude>./tests/Browser/</exclude>
         </testsuite>
     </testsuites>
     <filter>

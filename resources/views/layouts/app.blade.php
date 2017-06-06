@@ -46,13 +46,13 @@
                             <li><a class="{!! route('register')==url()->current()  ? 'actual': '' !!}" href="{{ route('register') }}"> Sign Up</a></li>
                         @else
                             <li class="dropdown">
-                                <a href="#" class="user-name dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="#" id="dashboard-menu" class="dahboard-menu user-name dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <span class="glyphicon glyphicon-user"></span> {{ (Auth::user()->name)? Auth::user()->name : Auth::user()->email }} <span class="caret"></span>
                                 </a>
 
                                 <ul id="user-admin" class="dropdown-menu" role="menu">
                                     <li>
-                                        <a class="glyphicon glyphicon-log-out" href="{{ route('logout') }}"
+                                        <a class="glyphicon glyphicon-log-out" id="logout" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout

@@ -8,7 +8,7 @@ Implemented functionalities are:
 
 - view layer is all done using ReactJS; 
 - UI is responsive using mostly media queries and Twitter Bootsrap
-- backend communication with MySQL is done using simple Laravel API 
+- backend communication with MySQL is done using Laravel 
 - CRUD fetaures for user contacts. User can only see their list of contacts;
 - Exporting a single contacts to vCard in .vcf files (PATH:storage/app/public/vcf);
 - Searching Contacts (real live search);
@@ -54,12 +54,12 @@ $ php artisan make:auth
 
 Make app listen to strictly on port 8000 in localhost:
 
-$ php -S localhost:8000 -t public
+$ php artisan serve --port=8000
 
 Start the local server (XAMPP, WAMP, LAMP) and visit the page http://localhost:8000/. This is built-in server very flexible for testing although not so stable as local web servers or even more like hosting servers.
 
 In footer is provided link to ContactApp Github repository.
 
-Thanks for your time ;)
+Thanks for your time,
 Antonio
 

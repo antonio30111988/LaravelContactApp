@@ -1,5 +1,5 @@
-os:
-  - windows
+sudo: required
+dist: trusty
 
 language: php
 
@@ -16,10 +16,16 @@ before_script:
   - npm install npm@latest -g
   - npm install -g jshint
   - npm install
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - ./vendor/laravel/dusk/bin/chromedriver-linux &
+  - cp .env.testing .env
+  - php artisan serve &
   
 script:
   - vendor/bin/phpunit --coverage-text
   - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
   - npm run production
   - jshint resources/assets/js/modules/*
+  - php artisan dusk
 
