@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/html/lara-contact
+hooks:
+  BeforeInstall:
+    - location: aws_deployment/deregister_from_elb.sh
+      timeout: 400
+      runas: root
+  AfterInstall:
+    - location: aws_deployment/finish_install.sh
+  ApplicationStart:
+    - location: aws_deployment/bind_app.sh
+      timeout: 120
+      runas: root
+    - location: aws_deployment/register_with_elb.sh
+      timeout: 120
